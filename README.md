@@ -130,6 +130,7 @@ For those who desire for scripts to edit it's very important. The syntax is rath
 - An "-1" argument means it connected with next string index.
 - ">" is for string beginning.
 After its goes mark of primar index of string or -1. If it's -1, the string is connected. Connected strings always goes after the defination of connected arguments.
+
 **DO NOTE: INDEXES AFTER ">" SHOWS ONLY PRIMAR INDEXES! THEN COMPILE PROGRAM TAKE A STRING INDEX ONLY FROM THE NUMBER OF ">" IN SCRIPT!
 DO NOTE: NOT AN ALL OF CONNECTED INDEXES WAS FOUND!**
 
@@ -141,5 +142,6 @@ DO NOTE: NOT AN ALL OF CONNECTED INDEXES WAS FOUND!**
 - Аргумент "-1" значит, что он связан с индексом следующей строки.
 - ">" обозначает строк начало.
 После сего идёт либо показатель изначального индекса строки, либо -1. -1 значит, что строка связанная. Связанные строки всегда следуют после задачи связанных аргументов.
+
 **ВАЖНО: ИНДЕКСЫ ПОСЛЕ ">" ОТОБРАЖАЮТ ЛИШЬ ИЗНАЧАЛЬНЫЕ ИНДЕКСЫ! ПРИ КОМПИЛЯЦИИ ИНДЕКС СТРОКИ БЕРЁТСЯ ЛИШЬ ИЗ НОМЕРА ">" В СКРИПТЕ!
 ВАЖНО: НЕ ВСЕ СВЯЗНАННЫЕ ИНДЕКСЫ БЫЛИ НАЙДЕНЫ!**
