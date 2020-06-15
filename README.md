@@ -8,6 +8,15 @@ The tool supports two GUI languages: English and Russian.
 There was some tools for the formats ealier, but it was always simple string dumpers. Sometime with an additional functionality.
 Ранее для сего формата были прочие средства, но все они были простыми дамперами строк. Иногда с дополнительным функционалом.
 
+Tested on:
+- [Kusarihime ~Euthanasia~](https://vndb.org/v37)
+
+Протестировано на:
+- [Принцесса порчи: Эвтаназия](https://vndb.org/v37)
+
+Uncomplete game's on the engine list you can see on [here](https://vndb.org/r?fil=engine-codeX_01RScript).
+Неполный список игр на данном движке вы можете просмотреть [здесь](https://vndb.org/r?fil=engine-codeX_01RScript).
+
 # Common / Общее
 
 This program was developed for correctly working with .gsc files of the engine codeX Rscript, which also called as Liar-soft Engine and raiL-soft Engine. The engine is rather simple much like it's formats, for example .gsc, with which through may be some problematic moments. Still the moments are ceasing by the specific decompile and compile. But the scheme can also cause problems it some situations.
