@@ -1,11 +1,14 @@
 # gscScriptCompAndDecompiler
 Tool for decompiling, compiling and rebuilding scripts .gsc from the visual novel's engine codeX RScript (also known as Liar-soft Engine or raiL-soft Engine).
+
 Средство для декомпляции, компиляции и перестройки скриптов .gsc движка визуальных новелл codeX RScript, известного также как Liar-soft Engine или raiL-soft Engine).
 
 The tool supports two GUI languages: English and Russian.
+
 Средство поддерживает два языка графического интерфейса: русский и английский.
 
 There was some tools for the formats ealier, but it was always simple string dumpers. Sometime with an additional functionality.
+
 Ранее для сего формата были прочие средства, но все они были простыми дамперами строк. Иногда с дополнительным функционалом.
 
 Tested on:
