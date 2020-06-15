@@ -51,97 +51,90 @@ Unfortunately, the number of known commands aren't big (but not of the structure
 
 Well, let's show you a basic known commands with the arguments:
 
-3 (0x03): JUMP_UNLESS.
+- 3 (0x03): JUMP_UNLESS.
 Arguments: [???]
-5 (0x05): JUMP.
+- 5 (0x05): JUMP.
 Arguments: [offset from the beginning of command block].
-13 (0x0D): PAUSE.
+- 13 (0x0D): PAUSE.
 Arguments: [time in seconds].
-20 (0x14): IMAGE_DEF.
+- 20 (0x14): IMAGE_DEF.
 Arguments: [image index (from the name), ???].
-26 (0x1A): SCENE_SET.
+- 26 (0x1A): SCENE_SET.
 Arguments: [].
-28 (0x1C): BLEND_IMG.
+- 28 (0x1C): BLEND_IMG.
 Arguments: [???, type1, type2].
-81 (0x51): MESSAGE.
+- 81 (0x51): MESSAGE.
 Arguments: [???, voice index (from the name), ???, ???, -1, ???].
 In a .gsc itself is not a -1, but a message number.
-200 (0xC8): READ_SCENARIO.
+- 200 (0xC8): READ_SCENARIO.
 Arguments: [???, ???, ???, ???, ???, ???, ???, ???, ???, ???, ???].
-255 (0xFF): SPRITE.
+- 255 (0xFF): SPRITE.
 Arguments: [mode, position, image index, ???, ???].
-13568 (0x3500): AND.
+- 13568 (0x3500): AND.
 Arguments: [???, ???, ???].
-18432 (0x4800): EQUALS.
+- 18432 (0x4800): EQUALS.
 Arguments: [???, ???, ???].
-21504 (0x5400): GREATER_EQUALS.
+- 21504 (0x5400): GREATER_EQUALS.
 Arguments: [???, ???, ???].
-43520 (0xAA00): ADD.
+- 43520 (0xAA00): ADD.
 Arguments: [???, ???, ???].
-61696 (0xF100): ASSIGN.
+- 61696 (0xF100): ASSIGN.
 Arguments: [???, ???].
 
 Увы, команд известно мало (но не их структур), а их аргументов ещё меньше. Что, впрочем, может измениться в будущем. Всякая известная команда в файле обозначена некоторой строкой.
 
 Итак, приведём базовые известные команды с аргументами:
 
-3 (0x03): JUMP_UNLESS.
+- 3 (0x03): JUMP_UNLESS.
 Аргументы: [???]
-5 (0x05): JUMP.
+- 5 (0x05): JUMP.
 Аргументы: [смещение от начала блока команд].
-13 (0x0D): PAUSE.
+- 13 (0x0D): PAUSE.
 Аргументы: [время в секундах].
-20 (0x14): IMAGE_DEF.
+- 20 (0x14): IMAGE_DEF.
 Аргументы: [индекс картинки (из имени), ???].
-26 (0x1A): SCENE_SET.
+- 26 (0x1A): SCENE_SET.
 Аргументы: [].
-28 (0x1C): BLEND_IMG.
+- 28 (0x1C): BLEND_IMG.
 Аргументы: [???, тип1, тип2].
-81 (0x51): MESSAGE.
+- 81 (0x51): MESSAGE.
 Аргументы: [???, индекс гласа (из имени), ???, ???, -1, ???].
 В самом .gsc вместо "-1" номер сообщения!
-200 (0xC8): READ_SCENARIO.
+- 200 (0xC8): READ_SCENARIO.
 Аргументы: [???, ???, ???, ???, ???, ???, ???, ???, ???, ???, ???].
-255 (0xFF): SPRITE.
+- 255 (0xFF): SPRITE.
 Аргументы: [режим, позиция, индекс картинки, ???, ???].
-13568 (0x3500): AND.
+- 13568 (0x3500): AND.
 Аргументы: [???, ???, ???].
-18432 (0x4800): EQUALS.
+- 18432 (0x4800): EQUALS.
 Аргументы: [???, ???, ???].
-21504 (0x5400): GREATER_EQUALS.
+- 21504 (0x5400): GREATER_EQUALS.
 Аргументы: [???, ???, ???].
-43520 (0xAA00): ADD.
+- 43520 (0xAA00): ADD.
 Аргументы: [???, ???, ???].
-61696 (0xF100): ASSIGN.
+- 61696 (0xF100): ASSIGN.
 Аргументы: [???, ???].
 
 # Syntax / Синтаксис
 
 For those who desire for scripts to edit it's very important. The syntax is rather simple, but it have some specific moments.
 
-"<" is the string's beginning is for one-string comment.
-
-"#" in the string's beginning is for defination of command.
-
-"[..., ..., ...]" is for function argument's splitted with "," form. It goes strictly on the next line after the command defination.
-
-A "-1" argument means it connected with next string index.
-
-">" is for string beginning.
+- "<" is the string's beginning is for one-string comment.
+- "#" in the string's beginning is for defination of command.
+- "[..., ..., ...]" is for function argument's splitted with "," form. It goes strictly on the next line after the command defination.
+- An "-1" argument means it connected with next string index.
+- ">" is for string beginning.
 After its goes mark of primar index of string or -1. If it's -1, the string is connected. Connected strings always goes after the defination of connected arguments.
 **DO NOTE: INDEXES AFTER ">" SHOWS ONLY PRIMAR INDEXES! THEN COMPILE PROGRAM TAKE A STRING INDEX ONLY FROM THE NUMBER OF ">" IN SCRIPT!
 DO NOTE: NOT AN ALL OF CONNECTED INDEXES WAS FOUND!**
 
 Для тех, кто скрипты именно редактировать жаждет, сие крайне важно знать. Синтаксис в целом прост, но имеет ряд особенностей.
 
-|"<" в начале строки обозначает однострочный комментарий.
-"#" в начале строки есть определение команды.
-
-"[..., ..., ...]" есть форма описания аргументов функции (разделяются запятой) и следует сразу после определения команды.
-
-Аргумент "-1" значит, что он связан с индексом следующей строки.
-
-">" обозначает строк начало.
+- "<" в начале строки обозначает однострочный комментарий.
+- "#" в начале строки есть определение команды.
+- "[..., ..., ...]" есть форма описания аргументов функции (разделяются запятой) и следует сразу после определения команды.
+- Аргумент "-1" значит, что он связан с индексом следующей строки.
+- ">" обозначает строк начало.
 После сего идёт либо показатель изначального индекса строки, либо -1. -1 значит, что строка связанная. Связанные строки всегда следуют после задачи связанных аргументов.
 **ВАЖНО: ИНДЕКСЫ ПОСЛЕ ">" ОТОБРАЖАЮТ ЛИШЬ ИЗНАЧАЛЬНЫЕ ИНДЕКСЫ! ПРИ КОМПИЛЯЦИИ ИНДЕКС СТРОКИ БЕРЁТСЯ ЛИШЬ ИЗ НОМЕРА ">" В СКРИПТЕ!
 ВАЖНО: НЕ ВСЕ СВЯЗНАННЫЕ ИНДЕКСЫ БЫЛИ НАЙДЕНЫ!**
