@@ -9,7 +9,7 @@ There was some tools for the formats ealier, but it was always simple string dum
 Ранее для сего формата были прочие средства, но все они были простыми дамперами строк. Иногда с дополнительным функционалом.
 
 Tested on:
-- [Kusarihime ~Euthanasia~](https://vndb.org/v37)
+- [Kusarihime \~Euthanasia\~](https://vndb.org/v37)
 
 Протестировано на:
 - [Принцесса порчи: Эвтаназия](https://vndb.org/v37)
@@ -126,8 +126,8 @@ A "-1" argument means it connected with next string index.
 
 ">" is for string beginning.
 After its goes mark of primar index of string or -1. If it's -1, the string is connected. Connected strings always goes after the defination of connected arguments.
-DO NOTE: INDEXES AFTER ">" SHOWS ONLY PRIMAR INDEXES! THEN COMPILE PROGRAM TAKE A STRING INDEX ONLY FROM THE NUMBER OF ">" IN SCRIPT!
-DO NOTE: NOT AN ALL OF CONNECTED INDEXES WAS FOUND!
+**DO NOTE: INDEXES AFTER ">" SHOWS ONLY PRIMAR INDEXES! THEN COMPILE PROGRAM TAKE A STRING INDEX ONLY FROM THE NUMBER OF ">" IN SCRIPT!
+DO NOTE: NOT AN ALL OF CONNECTED INDEXES WAS FOUND!**
 
 Для тех, кто скрипты именно редактировать жаждет, сие крайне важно знать. Синтаксис в целом прост, но имеет ряд особенностей.
 
@@ -140,5 +140,5 @@ DO NOTE: NOT AN ALL OF CONNECTED INDEXES WAS FOUND!
 
 ">" обозначает строк начало.
 После сего идёт либо показатель изначального индекса строки, либо -1. -1 значит, что строка связанная. Связанные строки всегда следуют после задачи связанных аргументов.
-ВАЖНО: ИНДЕКСЫ ПОСЛЕ ">" ОТОБРАЖАЮТ ЛИШЬ ИЗНАЧАЛЬНЫЕ ИНДЕКСЫ! ПРИ КОМПИЛЯЦИИ ИНДЕКС СТРОКИ БЕРЁТСЯ ЛИШЬ ИЗ НОМЕРА ">" В СКРИПТЕ!
-ВАЖНО: НЕ ВСЕ СВЯЗНАННЫЕ ИНДЕКСЫ БЫЛИ НАЙДЕНЫ!
+**ВАЖНО: ИНДЕКСЫ ПОСЛЕ ">" ОТОБРАЖАЮТ ЛИШЬ ИЗНАЧАЛЬНЫЕ ИНДЕКСЫ! ПРИ КОМПИЛЯЦИИ ИНДЕКС СТРОКИ БЕРЁТСЯ ЛИШЬ ИЗ НОМЕРА ">" В СКРИПТЕ!
+ВАЖНО: НЕ ВСЕ СВЯЗНАННЫЕ ИНДЕКСЫ БЫЛИ НАЙДЕНЫ!**
