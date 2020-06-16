@@ -795,15 +795,11 @@ class GUI():
                 self.Outer.insert(1.0, "Something went wrong...\nCouldn't decompile this .gsc...")
             self.Outer['state'] = DISABLED
     def CompileFromTxt(self):
-        NewScript = GscFile(self.FileName, 1)
-        NewScript.ReinitAll()
-        NewScript.FileName = self.FileName
-        NewScript.CompileTxtToGsc()
         try:
-            #NewScript = GscFile(self.FileName, 1)
-            #NewScript.ReinitAll()
-            #NewScript.FileName = self.FileName
-            #NewScript.CompileTxtToGsc()
+            NewScript = GscFile(self.FileName, 1)
+            NewScript.ReinitAll()
+            NewScript.FileName = self.FileName
+            NewScript.CompileTxtToGsc()
             self.Outer['state'] = NORMAL
             self.Outer.delete(1.0, END)
             if (self.Language == 'RUS'):
