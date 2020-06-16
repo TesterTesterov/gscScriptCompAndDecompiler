@@ -183,7 +183,9 @@ class GscFile:
                        (0xE1, 'iiiii', ''),
                        (0xE6, 'i', ''),
                        (0xE7, 'i', ''),
-                       (0x1800, 'hhh', ''))
+                       (0x1800, 'hhh', ''),
+                       (0x5800, 'hhh', ''),
+                       (0x7800, 'hhh', ''))
     #Библиотека команд, двумерный массив.
     #[n][0] - команда;
     #[n][1] - структура;
@@ -395,7 +397,7 @@ class GscFile:
                 String = ''
                 i += 1
                 KostilPer = 1
-                while (0 == 0):
+                while (i < len(Lines)):
                     if (len(Lines[i]) == 0):
                         if (KostilPer == 1):
                             KostilPer = 0
@@ -438,7 +440,7 @@ class GscFile:
                     String = ''
                     i += 1
                     KostilPer = 1
-                    while (0 == 0):
+                    while (i < len(Lines)):
                         if (len(Lines[i]) == 0):
                             if (KostilPer == 1):
                                 KostilPer = 0
@@ -455,6 +457,8 @@ class GscFile:
                             KostilPer = 0
                         else:
                             String = String + '^n'
+                        if (i >= len(Lines)):
+                            i -= 1
                         String = String + Lines[i]
                         i += 1
                     self.FileStrings.append(String)
@@ -598,7 +602,7 @@ class GUI():
         self.root.resizable(width=False, height=False)
         
         self.root.geometry("400x420+{}+{}".format((self.root.winfo_screenwidth()-400)//2, (self.root.winfo_screenheight()-420)//2))
-        self.root.title("GscScriptEditor by Tester")
+        self.root.title("GscScriptCompAndDecompiler by Tester")
             
         self.LeftSide = Frame(self.root, width=400, heigh=600)
         self.LeftSide.pack(side='left')
@@ -653,7 +657,7 @@ class GUI():
     #Техническое:
     def SetLangRus(self):
         self.Language = "RUS"
-        self.root.title("GscScriptEditor от Tester-а")
+        self.root.title("GscScriptCompAndDecompiler от Tester-а")
         self.Definer['text'] = "           ОПРЕДЕЛИТЬ"
         self.Clearer['text'] = " ОЧИСТИТЬ "
         self.Undefiner['text'] = "РАЗОПРЕДЕЛИТЬ        "
@@ -671,7 +675,7 @@ class GUI():
         self.Outer['state'] = DISABLED
     def SetLangEng(self):
         self.Language = "ENG"
-        self.root.title("GscScriptEditor by Tester")
+        self.root.title("GscScriptCompAndDecompiler by Tester")
         self.Definer['text'] = "                  DEFINE"
         self.Clearer['text'] = "          CLEAR          "
         self.Undefiner['text'] = "UNDEFINE               "
@@ -791,11 +795,15 @@ class GUI():
                 self.Outer.insert(1.0, "Something went wrong...\nCouldn't decompile this .gsc...")
             self.Outer['state'] = DISABLED
     def CompileFromTxt(self):
+        NewScript = GscFile(self.FileName, 1)
+        NewScript.ReinitAll()
+        NewScript.FileName = self.FileName
+        NewScript.CompileTxtToGsc()
         try:
-            NewScript = GscFile(self.FileName, 1)
-            NewScript.ReinitAll()
-            NewScript.FileName = self.FileName
-            NewScript.CompileTxtToGsc()
+            #NewScript = GscFile(self.FileName, 1)
+            #NewScript.ReinitAll()
+            #NewScript.FileName = self.FileName
+            #NewScript.CompileTxtToGsc()
             self.Outer['state'] = NORMAL
             self.Outer.delete(1.0, END)
             if (self.Language == 'RUS'):
