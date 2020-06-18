@@ -50,10 +50,14 @@ class GscFile:
     CommandsLibrary = ((0x03, 'i', 'JUMP_UNLESS'),
                        (0x05, 'i', 'JUMP'),
                        (0x0D, 'i', 'PAUSE'),
-                       (0x14, 'ii', 'IMAGE_DEF'),
-                       (0x1A, '', 'SCENE_SET'), #IMAGE_SET?
+                       (0x0C, 'ii', 'CALL_SCRIPT'), #[имя скрипта без начальных нулей, ???]
+                       (0x14, 'ii', 'IMAGE_GET'),
+                       (0x1A, '', 'IMAGE_SET'),
                        (0x1C, 'iii', 'BLEND_IMG'),
+                       (0x1E, 'iiiiii', 'IMAGE_DEF'),
                        (0x51, 'iiiiiii', 'MESSAGE'),
+                       (0x52, 'iiiiii', 'APPEND_MESSAGE'),
+                       (0x79, 'ii', 'GET_DIRECTORY'),
                        (0xC8, 'iiiiiiiiiii', 'READ_SCENARIO'), #??? Подправить число аргументов?
                        (0xFF, 'iiiii', 'SPRITE'),
                        (0x3500, 'hhh', 'AND'),
@@ -62,10 +66,10 @@ class GscFile:
                        (0xAA00, 'hhh', 'ADD'),
                        (0xF100, 'hh', 'ASSIGN'),
                        (0x04, 'i', ''),
+                       (0x08, '', ''),
                        (0x09, 'h', ''),
-                       (0x0A, '', ''),
+                       (0x0A, '', ''), #h в другом типе? Хм-м... #WAIT_FOR_CLICK?
                        (0x0B, '', ''),
-                       (0x0C, 'ii', ''),
                        (0x0E, 'hiiiiiiiiiiiiii', ''), #???
                        (0x0F, 'iiiiiiiiiiii', ''), #??? #Массив? Подправить число аргументов?
                        (0x10, 'i', ''),
@@ -79,14 +83,13 @@ class GscFile:
                        (0x19, 'ii', ''),
                        (0x1B, '', ''),
                        (0x1D, 'ii', ''),
-                       (0x1E, 'iiiiii', ''),
                        (0x20, 'iiiiii', ''),
                        (0x21, 'iiiii', ''),
                        (0x22, 'iiiii', ''),
                        (0x23, 'ii', ''),
                        (0x24, 'ii', ''),
                        (0x25, 'ii', ''),
-                       (0x26, 'iiii', ''),
+                       (0x26, 'iiii', ''), #Возможно, где-то 'iii'?
                        (0x27, 'iii', ''),
                        (0x28, 'ii', ''),
                        (0x29, 'ii', ''),
@@ -96,7 +99,7 @@ class GscFile:
                        (0x2D, 'ii', ''),
                        (0x2E, 'i', ''),
                        (0x2F, 'ii', ''),
-                       (0x30, 'iii', ''),
+                       (0x30, 'iii', ''), #Возможно, где-то 'ii'?
                        (0x31, 'ii', ''),
                        (0x32, '', ''),
                        (0x33, '', ''),
@@ -125,8 +128,6 @@ class GscFile:
                        (0x4B, 'iiiii', ''),
                        (0x4D, 'iiii', ''),
                        (0x50, 'i', ''),
-                       (0x51, 'iiiiiii', ''),
-                       (0x52, 'iiiiii', ''),
                        (0x53, 'i', ''),
                        (0x5A, 'iii', ''),
                        (0x5B, 'iiiii', ''),
@@ -144,6 +145,7 @@ class GscFile:
                        (0x67, 'ii', ''),
                        (0x68, 'iiii', ''),
                        (0x69, 'ii', ''),
+                       (0x6A, 'iiiii', ''),#TEMP!
                        (0x6E, 'iii', ''),
                        (0x6F, 'iii', ''),
                        (0x70, 'i', ''),
@@ -153,7 +155,6 @@ class GscFile:
                        (0x74, 'ii', ''),
                        (0x75, 'ii', ''),
                        (0x78, 'ii', ''),
-                       (0x79, 'ii', ''),
                        (0x82, 'iiii', ''),
                        (0x83, 'iiiii', ''),
                        (0x84, 'ii', ''),
@@ -184,12 +185,51 @@ class GscFile:
                        (0xE6, 'i', ''),
                        (0xE7, 'i', ''),
                        (0x1800, 'hhh', ''),
+                       (0x1810, 'hhh', ''), #!!!
+                       (0x1900, 'hhh', ''),
+                       (0x1910, 'hhh', ''),
+                       (0x2500, 'hhh', ''),
+                       (0x1A01, 'hhh', ''), #!!!
+                       (0x1A00, 'hhh', ''),
+                       (0x4400, 'hhh', ''),
+                       (0x4810, 'hhh', ''), #!!!
+                       (0x4900, 'hhh', ''),
                        (0x5800, 'hhh', ''),
-                       (0x7800, 'hhh', ''))
-    #Библиотека команд, двумерный массив.
-    #[n][0] - команда;
-    #[n][1] - структура;
-    #[n][2] - определение (может быть пустым.
+                       (0x6800, 'hhh', ''),
+                       (0x7800, 'hhh', ''),
+                       (0x8800, 'hhh', ''),
+                       (0x8A00, 'hhh', ''),
+                       (0x9800, 'hhh', ''),
+                       (0x9810, 'hhh', ''), #!!!
+                       (0x9A00, 'hhh', ''),
+                       (0xA100, 'hhh', ''),
+                       (0xA201, 'hhh', ''), #!!
+                       (0xA400, 'hhh', ''),
+                       (0xA500, 'hhh', ''),
+                       (0xA600, 'hhh', ''),
+                       (0xA800, 'hhh', ''),
+                       (0xA810, 'hhh', ''), #!!!
+                       (0xB400, 'hhh', ''),
+                       (0xB800, 'hhh', ''),
+                       (0xB900, 'hhh', ''),
+                       (0xC400, 'hhh', ''),
+                       (0xC800, 'hhh', ''),
+                       (0xD400, 'hhh', ''),
+                       (0xD800, 'hhh', ''),
+                       (0xE400, 'hhh', ''),
+                       (0xE800, 'hhh', ''))
+    #Библиотека команд, двумерный кортеж.
+    #(n)(0) - команда;
+    #(n)(1) - структура;
+    #(n)(2) - определение (может быть пустым.
+
+    ConnectedStringsLibrary = [[0x0F, [1]],
+                               [0x51, [-3, -2]],
+                               [0x52, [-2]],
+                               [0x79, [1]]]
+    #Библиотека связанных со строками аргументов.
+    #(n)(0) - команда;
+    #(n)(1) - кортеж связанных аргументов.
     
     def __init__(self, FileName, Mode):
         self.FileName = FileName
@@ -357,20 +397,31 @@ class GscFile:
                 CommandName = self.CommandsLibrary[i][2]
             else:
                 CommandName = str(self.Commands[CommandNumber])
-            if (self.Commands[CommandNumber] == 0x51):
-                MessageKostil = 1
-            if (MessageKostil == 1):
-                MessageArgsTrue = self.CommandArgs[CommandNumber]
-                MessageNum = MessageArgsTrue[-2]
-                MessageArgsTrue[-2] = -1
-                while (StringCount < MessageNum):
-                    self.File.write('>' + str(StringCount) + '\n')
-                    self.File.write(self.FileStrings[StringCount].replace('^n', '\n') + '\n')
+
+            ConStr = 0
+            kk = 0
+            for kk in range(0, len(self.ConnectedStringsLibrary)):
+                if (self.Commands[CommandNumber] == self.ConnectedStringsLibrary[kk][0]):
+                    ConStr = 1
+                    break
+                
+            if (ConStr > 0):
+                kkk = 0
+                StringsNew = []
+                for kkk in range(len(self.ConnectedStringsLibrary[kk][1])):
+                    MessageArgsTrue = self.CommandArgs[CommandNumber]
+                    MessageNum = MessageArgsTrue[self.ConnectedStringsLibrary[kk][1][kkk]]
+                    MessageArgsTrue[self.ConnectedStringsLibrary[kk][1][kkk]] = -1
+                    StringsNew.append(self.FileStrings[MessageNum].replace('^n', '\n'))
+                    while (StringCount < MessageNum):
+                        self.File.write('>' + str(StringCount) + '\n')
+                        self.File.write(self.FileStrings[StringCount].replace('^n', '\n') + '\n')
                     StringCount += 1
+                    
                 self.File.write("#" + CommandName + '\n')
                 self.File.write(str(self.CommandArgs[CommandNumber]))
-                self.File.write("\n>-1\n" + self.FileStrings[MessageNum].replace('^n', '\n'))
-                StringCount += 1
+                for z in StringsNew:
+                    self.File.write("\n>-1\n" + z)                
             else:
                 self.File.write("#" + CommandName)
                 self.File.write("\n")
@@ -436,33 +487,43 @@ class GscFile:
                     CommandNEW.append(int(CommandCTR[ii]))
                 self.CommandArgs.append(CommandNEW)
                 i += 1
-                if (CommandType == 0x51):
-                    String = ''
-                    i += 1
-                    KostilPer = 1
-                    while (i < len(Lines)):
-                        if (len(Lines[i]) == 0):
+
+                ConStr = 0
+                kk = 0
+                for kk in range(0, len(self.ConnectedStringsLibrary)):
+                    if (CommandType == self.ConnectedStringsLibrary[kk][0]):
+                        ConStr = 1
+                        break
+                
+                if (ConStr > 0):
+                    kkk = 0
+                    for kkk in range(len(self.ConnectedStringsLibrary[kk][1])):
+                        String = ''
+                        i += 1
+                        KostilPer = 1
+                        while (i < len(Lines)):
+                            if (len(Lines[i]) == 0):
+                                if (KostilPer == 1):
+                                    KostilPer = 0
+                                else:
+                                    String = String + '^n'
+                                i += 1
+                                continue
+                            if (Lines[i][0] == '<'): #Комментарии.
+                                i += 1
+                                continue
+                            if ((Lines[i][0] == '#') or (Lines[i][0] == '>')):
+                                break
                             if (KostilPer == 1):
                                 KostilPer = 0
                             else:
                                 String = String + '^n'
+                            if (i >= len(Lines)):
+                                i -= 1
+                            String = String + Lines[i]
                             i += 1
-                            continue
-                        if (Lines[i][0] == '<'): #Комментарии.
-                            i += 1
-                            continue
-                        if ((Lines[i][0] == '#') or (Lines[i][0] == '>')):
-                            break
-                        if (KostilPer == 1):
-                            KostilPer = 0
-                        else:
-                            String = String + '^n'
-                        if (i >= len(Lines)):
-                            i -= 1
-                        String = String + Lines[i]
-                        i += 1
-                    self.FileStrings.append(String)
-                    self.CommandArgs[-1][-2] = (len(self.FileStrings) - 1)
+                        self.FileStrings.append(String)
+                        self.CommandArgs[-1][self.ConnectedStringsLibrary[kk][1][kkk]] = (len(self.FileStrings) - 1)
             else:
                 i += 1
                 continue
@@ -602,7 +663,7 @@ class GUI():
         self.root.resizable(width=False, height=False)
         
         self.root.geometry("400x420+{}+{}".format((self.root.winfo_screenwidth()-400)//2, (self.root.winfo_screenheight()-420)//2))
-        self.root.title("GscScriptCompAndDecompiler by Tester")
+        self.root.title("GscScriptCompAndDecompiler by Tester 2.0")
             
         self.LeftSide = Frame(self.root, width=400, heigh=600)
         self.LeftSide.pack(side='left')
@@ -657,7 +718,7 @@ class GUI():
     #Техническое:
     def SetLangRus(self):
         self.Language = "RUS"
-        self.root.title("GscScriptCompAndDecompiler от Tester-а")
+        self.root.title("GscScriptCompAndDecompiler от Tester-а 2.0")
         self.Definer['text'] = "           ОПРЕДЕЛИТЬ"
         self.Clearer['text'] = " ОЧИСТИТЬ "
         self.Undefiner['text'] = "РАЗОПРЕДЕЛИТЬ        "
@@ -675,7 +736,7 @@ class GUI():
         self.Outer['state'] = DISABLED
     def SetLangEng(self):
         self.Language = "ENG"
-        self.root.title("GscScriptCompAndDecompiler by Tester")
+        self.root.title("GscScriptCompAndDecompiler by Tester 2.0")
         self.Definer['text'] = "                  DEFINE"
         self.Clearer['text'] = "          CLEAR          "
         self.Undefiner['text'] = "UNDEFINE               "
@@ -774,11 +835,15 @@ class GUI():
                 self.Outer.insert(1.0, "Something went wrong...\nCouldn't rebuilt this .gsc...")
             self.Outer['state'] = DISABLED
     def DecompileToTxt(self):
+        NewScript = GscFile(self.FileName, 0)
+        NewScript.ReinitAll()
+        NewScript.FileName = self.FileName
+        NewScript.DecompileGscToTxt()
         try:
-            NewScript = GscFile(self.FileName, 0)
-            NewScript.ReinitAll()
-            NewScript.FileName = self.FileName
-            NewScript.DecompileGscToTxt()
+            #NewScript = GscFile(self.FileName, 0)
+            #NewScript.ReinitAll()
+            #NewScript.FileName = self.FileName
+            #NewScript.DecompileGscToTxt()
             self.Outer['state'] = NORMAL
             self.Outer.delete(1.0, END)
             if (self.Language == 'RUS'):
@@ -795,11 +860,15 @@ class GUI():
                 self.Outer.insert(1.0, "Something went wrong...\nCouldn't decompile this .gsc...")
             self.Outer['state'] = DISABLED
     def CompileFromTxt(self):
+        NewScript = GscFile(self.FileName, 1)
+        NewScript.ReinitAll()
+        NewScript.FileName = self.FileName
+        NewScript.CompileTxtToGsc()
         try:
-            NewScript = GscFile(self.FileName, 1)
-            NewScript.ReinitAll()
-            NewScript.FileName = self.FileName
-            NewScript.CompileTxtToGsc()
+            #NewScript = GscFile(self.FileName, 1)
+            #NewScript.ReinitAll()
+            #NewScript.FileName = self.FileName
+            #NewScript.CompileTxtToGsc()
             self.Outer['state'] = NORMAL
             self.Outer.delete(1.0, END)
             if (self.Language == 'RUS'):
