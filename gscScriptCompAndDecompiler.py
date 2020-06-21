@@ -221,7 +221,7 @@ class GscFile:
     #Библиотека команд, двумерный кортеж.
     #(n)(0) - команда;
     #(n)(1) - структура;
-    #(n)(2) - определение (может быть пустым.
+    #(n)(2) - определение (может быть пустым).
 
     ConnectedStringsLibrary = [[0x0F, [1]],
                                [0x51, [-3, -2]],
@@ -229,7 +229,14 @@ class GscFile:
                                [0x79, [1]]]
     #Библиотека связанных со строками аргументов.
     #(n)(0) - команда;
-    #(n)(1) - кортеж связанных аргументов.
+    #(n)(1) - список связанных аргументов.
+
+    #Далее костыли по связанным со смещениям аргументам.
+
+    ConnectedOffsetsLibrary = [[0x03, [0]],
+                               [0x05, [0]]]
+    LabelsLibrary = []
+    #Индекс равен номеру метки. Метки начинаются с @. Каждый элемент есть смещение.
     
     def __init__(self, FileName, Mode):
         self.FileName = FileName
@@ -384,27 +391,53 @@ class GscFile:
         self.WriteFile()
 
         StringCount = 0
+        Offset = 0
         for CommandNumber in range(0, len(self.Commands)):
+            #Во-первых, следует определить при необходимости метку.
+
+            #Здесь надо кое-что сперва определить...
             DontDef = 0
+            DontKnow = 0
             MessageKostil = 0
             CommandName = ''
             for i in range(0, len(self.CommandsLibrary)):
                 DontDef = 1
-                if ((self.Commands[CommandNumber] == self.CommandsLibrary[i][0]) and (self.CommandsLibrary[i][2] != '')):
-                    DontDef = 0
+                DontKnow = 1
+                #if ((self.Commands[CommandNumber] == self.CommandsLibrary[i][0]) and (self.CommandsLibrary[i][2] != '')):
+                #    DontDef = 0
+                #    break;
+                if (self.Commands[CommandNumber] == self.CommandsLibrary[i][0]):
+                    if (self.CommandsLibrary[i][2] != ''):
+                        DontDef = 0
+                    DontKnow = 0
                     break;
             if (DontDef == 0):
                 CommandName = self.CommandsLibrary[i][2]
             else:
                 CommandName = str(self.Commands[CommandNumber])
-
+            #Во-вторых, получить смещение после сей итерации.
+            Offset += 2 #Все команды двухбайтовы.
+            if (DontKnow == 0):
+                for OfferI in self.CommandsLibrary[i][1]:
+                    if ((OfferI == 'h') or (OfferI == 'H')):
+                        Offset += 2
+                    elif ((OfferI == 'i') or (OfferI == 'I')):
+                        Offset += 4
+            else:
+                if ((self.Commands[CommandNumber] & 0xf000) == 0xf000):
+                    Offset += 4
+                elif ((self.Commands[CommandNumber] & 0xf000) == 0x0000):
+                    Offset += 0
+                else:
+                    Offset += 6
+            #Ну и далее всё остальное.
+            
             ConStr = 0
             kk = 0
             for kk in range(0, len(self.ConnectedStringsLibrary)):
                 if (self.Commands[CommandNumber] == self.ConnectedStringsLibrary[kk][0]):
                     ConStr = 1
                     break
-                
             if (ConStr > 0):
                 kkk = 0
                 StringsNew = []
@@ -416,6 +449,7 @@ class GscFile:
                     while (StringCount < MessageNum):
                         self.File.write('>' + str(StringCount) + '\n')
                         self.File.write(self.FileStrings[StringCount].replace('^n', '\n') + '\n')
+                        StringCount += 1
                     StringCount += 1
                     
                 self.File.write("#" + CommandName + '\n')
@@ -423,8 +457,7 @@ class GscFile:
                 for z in StringsNew:
                     self.File.write("\n>-1\n" + z)                
             else:
-                self.File.write("#" + CommandName)
-                self.File.write("\n")
+                self.File.write("#" + CommandName + '\n')
                 self.File.write(str(self.CommandArgs[CommandNumber]))
             if (CommandNumber != (len(self.Commands) - 1)):
                 self.File.write("\n")
@@ -434,6 +467,7 @@ class GscFile:
                     self.File.write(self.FileStrings[StringCount].replace('^', '\\'))
                     StringCount += 1
         self.CloseFile()
+        print("Контроль разборки секции команд: " + str(Offset) + " : " + str(len(self.FileStruct[1])))
     def CompileTxtToGsc(self):
         Lines = self.File.read().split('\n')
         i = 0
@@ -512,7 +546,7 @@ class GscFile:
                             if (Lines[i][0] == '<'): #Комментарии.
                                 i += 1
                                 continue
-                            if ((Lines[i][0] == '#') or (Lines[i][0] == '>')):
+                            if ((Lines[i][0] == '#') or (Lines[i][0] == '>') or (Libes[i][0] == '@')):
                                 break
                             if (KostilPer == 1):
                                 KostilPer = 0
