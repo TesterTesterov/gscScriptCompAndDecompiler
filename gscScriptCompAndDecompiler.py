@@ -506,11 +506,72 @@ class GscFile:
     def CompileTxtToGsc(self):
         Lines = self.File.read().split('\n')
         i = 0
+
+        #Обозначим все метки.
+        Offset = 0
+        LenOff = 0
+        while (i < len(Lines)):
+            if (Lines[i] == ''):
+                i += 1
+                continue
+            if (Lines[i][0] == '@'):
+                NotAnythingNew = 0
+                LabelNumber = int(Lines[i][1:])
+                for Marbas in self.Labels:
+                    if (LabelNumber == Marbas[0]):
+                        NotAnythingNew = 1
+                        break
+                if (NotAnythingNew == 1):
+                    i += i
+                    continue
+                self.Labels.append([])
+                self.Labels[LenOff].append(LabelNumber)
+                self.Labels[LenOff].append(Offset)
+                LenOff += 1
+                i += 1
+            elif (Lines[i][0] == '#'):
+                CommandDef = Lines[i][1:]
+                DontKnow = 1
+                iz = 0
+                while (iz < len(self.CommandsLibrary)):
+                    if (CommandDef == str(self.CommandsLibrary[iz][0])):
+                        DontKnow = 0
+                        break
+                    elif (CommandDef == self.CommandsLibrary[iz][2]):
+                        DontKnow = 0
+                        CommandDef = str(self.CommandsLibrary[iz][0])
+                        break
+                    iz += 1
+                CommandDef = int(CommandDef)
+                Offset += 2
+                if (DontKnow == 0):
+                    for OfferI in self.CommandsLibrary[iz][1]:
+                        if ((OfferI == 'h') or (OfferI == 'H')):
+                            Offset += 2
+                        elif ((OfferI == 'i') or (OfferI == 'I')):
+                            Offset += 4
+                else:
+                    if ((CommandDef & 0xf000) == 0xf000):
+                        Offset += 4
+                    elif ((CommandDef & 0xf000) == 0x0000):
+                        Offset += 0
+                    else:
+                        Offset += 6
+                i += 1
+            else:
+                i += 1
+                continue
+
+        #Сделаем всё остальное.
+        i = 0
         while (i < len(Lines)):
             if (Lines[i] == ''):
                 i += 1
                 continue
             if (Lines[i][0] == '<'): #Комментарии.
+                i += 1
+                continue
+            if (Lines[i][0] == '@'): #Метки (забираются раньше).
                 i += 1
                 continue
             if (Lines[i][0] == '>'):
@@ -554,6 +615,21 @@ class GscFile:
                     CommandCTR = []
                 for ii in range(0, len(CommandCTR)):
                     CommandNEW.append(int(CommandCTR[ii]))
+                #Работаем с командами, где есть связанные со смещениями аргументы.
+                Farba = 0
+                while (Farba < len(self.ConnectedOffsetsLibrary)):
+                    if (CommandType == self.ConnectedOffsetsLibrary[Farba][0]):
+                        for NewZeland in self.ConnectedOffsetsLibrary[Farba][1]:
+                            Ermeg = 0
+                            Ermeg = CommandNEW[NewZeland]
+                            Ai = 0
+                            for Ai in self.Labels:
+                                if (Ermeg == Ai[0]):
+                                    CommandNEW[NewZeland] = Ai[1]
+                        break   
+                    Farba += 1
+                
+                #Далее всё как обычно.
                 self.CommandArgs.append(CommandNEW)
                 i += 1
 
