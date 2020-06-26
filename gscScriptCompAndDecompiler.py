@@ -692,6 +692,7 @@ class GscFile:
         self.FileStrings = []
         self.CommandArgs = []
         self.Commands = []
+        self.Labels = []
     #Тех-работа с файлами:
     def CloseFile(self):
         self.File.close()
