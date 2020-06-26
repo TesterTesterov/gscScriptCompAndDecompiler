@@ -12,10 +12,14 @@ There was some tools for the formats ealier, but it was always simple string dum
 Ранее для сего формата были прочие средства, но все они были простыми дамперами строк. Иногда с дополнительным функционалом.
 
 Tested on:
-- [Kusarihime \~Euthanasia\~](https://vndb.org/v37)
+- [Kusarihime \~Euthanasia\~](https://vndb.org/v37) <for the most part>
+- [Sekien no Inganock -What a Beautiful People-](https://vndb.org/v417) <for the most part>
+- [Hiragumo-chan -Sengoku Gekokujou Monogatari-](https://vndb.org/v10182) <for the some part>
 
 Протестировано на:
-- [Принцесса порчи: Эвтаназия](https://vndb.org/v37)
+- [Принцесса порчи: Эвтаназия](https://vndb.org/v37) <по большей части>
+- [Инганок ярчайшего пламени: Как прекрасны люди](https://vndb.org/v417) <по большей части>
+- [Хирагумо-тян: Моногатари о "Высший побеждает высшего" эпохи Сэнгоку](https://vndb.org/v10182) <в некоторой степени>
 
 Uncomplete game's on the engine list you can see on [here](https://vndb.org/r?fil=engine-codeX_01RScript).
 
@@ -60,10 +64,13 @@ Well, let's show you a basic known commands with the arguments:
 Arguments: [label]. (In the original script offset from the beginning of command block).
 - 5 (0x05): JUMP.
 Arguments: [label]. (In the original script offset from the beginning of command block).
+- 12 (0x0C): CALL_SCRIPT.
+Arguments: [script number, ???].
 - 13 (0x0D): PAUSE.
 Arguments: [time in seconds].
-- 14 (0x0C): CALL_SCRIPT.
-Arguments: [script number, ???].
+- 14 (0x0E): CHOICE:
+Arguments: [???, ???, ???, ???, ???, ???, ???, -1, -1, ???, ???, ???, ???, ???, ???].
+In the original script is not -1, but choice's strings.
 - 20 (0x14): IMAGE_GET.
 Arguments: [image index (from the name), ???].
 - 26 (0x1A): IMAGE_SET.
@@ -104,10 +111,13 @@ Arguments: [???, ???].
 Аргументы: [метка]. (В оригинальном скрипте смещение относительно начала секции команд).
 - 5 (0x05): JUMP.
 Аргументы: [метка]. (В оригинальном скрипте смещение относительно начала секции команд).
+- 12 (0x0C): CALL_SCRIPT.
+Аргументы: [номер скрипта, ???].
 - 13 (0x0D): PAUSE.
 Аргументы: [время в секундах].
-- 14 (0x0C): CALL_SCRIPT.
-Аргументы: [номер скрипта, ???].
+- 14 (0x0E): CHOICE:
+Аргументы: [???, ???, ???, ???, ???, ???, ???, -1, -1, ???, ???, ???, ???, ???, ???].
+В оригинальном скрипте вместо -1 строки-выборы, порою начинающиеся с <*>.
 - 20 (0x14): IMAGE_GET.
 Аргументы: [индекс картинки (из имени), ???].
 - 26 (0x1A): IMAGE_SET.
@@ -144,7 +154,7 @@ Arguments: [???, ???].
 
 For those who desire for scripts to edit it's very important. The syntax is rather simple, but it have some specific moments.
 
-- "<" is the string's beginning is for one-string comment.
+- "$" is the string's beginning is for one-string comment.
 - "#" in the string's beginning is for defination of command.
 - "[..., ..., ...]" is for function argument's splitted with "," form. It goes strictly on the next line after the command defination.
 - "@" is a label, to which some arguments are connecting.
@@ -157,7 +167,7 @@ DO NOTE: NOT AN ALL OF CONNECTED INDEXES WAS FOUND!**
 
 Для тех, кто скрипты именно редактировать жаждет, сие крайне важно знать. Синтаксис в целом прост, но имеет ряд особенностей.
 
-- "<" в начале строки обозначает однострочный комментарий.
+- "$" в начале строки обозначает однострочный комментарий.
 - "#" в начале строки есть определение команды.
 - "[..., ..., ...]" есть форма описания аргументов функции (разделяются запятой) и следует сразу после определения команды.
 - "@" есть метка, на кою ссылаются некоторые команды.
