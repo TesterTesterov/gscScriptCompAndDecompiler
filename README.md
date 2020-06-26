@@ -57,20 +57,30 @@ Unfortunately, the number of known commands aren't big (but not of the structure
 Well, let's show you a basic known commands with the arguments:
 
 - 3 (0x03): JUMP_UNLESS.
-Arguments: [???]
+Arguments: [label]. (In the original script offset from the beginning of command block).
 - 5 (0x05): JUMP.
-Arguments: [offset from the beginning of command block].
+Arguments: [label]. (In the original script offset from the beginning of command block).
 - 13 (0x0D): PAUSE.
 Arguments: [time in seconds].
-- 20 (0x14): IMAGE_DEF.
+- 14 (0x0C): CALL_SCRIPT.
+Arguments: [script number, ???].
+- 20 (0x14): IMAGE_GET.
 Arguments: [image index (from the name), ???].
-- 26 (0x1A): SCENE_SET.
+- 26 (0x1A): IMAGE_SET.
 Arguments: [].
 - 28 (0x1C): BLEND_IMG.
 Arguments: [???, type1, type2].
+- 30 (0x1E): IMAGE_DEF.
+Arguments: [???, ???, ???, ???, ???, ???].
 - 81 (0x51): MESSAGE.
-Arguments: [???, voice index (from the name), ???, ???, -1, ???].
-In a .gsc itself is not a -1, but a message number.
+Arguments: [???, voice index (from the name), ???, -1, -1, ???].
+In a .gsc itself is not a -1, but a string numbers.
+- 82 (0x52): APPEND_MESSAGE.
+Arguments: [???, ???, ???, ???, -1, ???].
+In a .gsc itself is not a -1, but a string numbers.
+- 121 (0x79): GET_DIRECTORY.
+Arguments: [???, -1].
+In a .gsc itself is not a -1, but a string numbers.
 - 200 (0xC8): READ_SCENARIO.
 Arguments: [???, ???, ???, ???, ???, ???, ???, ???, ???, ???, ???].
 - 255 (0xFF): SPRITE.
@@ -91,20 +101,30 @@ Arguments: [???, ???].
 Итак, приведём базовые известные команды с аргументами:
 
 - 3 (0x03): JUMP_UNLESS.
-Аргументы: [???]
+Аргументы: [метка]. (В оригинальном скрипте смещение относительно начала секции команд).
 - 5 (0x05): JUMP.
-Аргументы: [смещение от начала блока команд].
+Аргументы: [метка]. (В оригинальном скрипте смещение относительно начала секции команд).
 - 13 (0x0D): PAUSE.
 Аргументы: [время в секундах].
-- 20 (0x14): IMAGE_DEF.
+- 14 (0x0C): CALL_SCRIPT.
+Аргументы: [номер скрипта, ???].
+- 20 (0x14): IMAGE_GET.
 Аргументы: [индекс картинки (из имени), ???].
-- 26 (0x1A): SCENE_SET.
+- 26 (0x1A): IMAGE_SET.
 Аргументы: [].
 - 28 (0x1C): BLEND_IMG.
 Аргументы: [???, тип1, тип2].
+- 30 (0x1E): IMAGE_DEF.
+Аргументы: [???, ???, ???, ???, ???, ???].
 - 81 (0x51): MESSAGE.
-Аргументы: [???, индекс гласа (из имени), ???, ???, -1, ???].
-В самом .gsc вместо "-1" номер сообщения!
+Аргументы: [???, индекс гласа (из имени), ???, -1, -1, ???].
+В самом .gsc вместо "-1" номера строк!
+- 82 (0x52): APPEND_MESSAGE.
+Аргументы: [???, ???, ???, ???, -1, ???].
+В самом .gsc вместо "-1" номера строк!
+- 121 (0x79): GET_DIRECTORY.
+Аргументы: [???, -1].
+В самом .gsc вместо "-1" номера строк!
 - 200 (0xC8): READ_SCENARIO.
 Аргументы: [???, ???, ???, ???, ???, ???, ???, ???, ???, ???, ???].
 - 255 (0xFF): SPRITE.
@@ -127,6 +147,7 @@ For those who desire for scripts to edit it's very important. The syntax is rath
 - "<" is the string's beginning is for one-string comment.
 - "#" in the string's beginning is for defination of command.
 - "[..., ..., ...]" is for function argument's splitted with "," form. It goes strictly on the next line after the command defination.
+- "@" is a label, to which some arguments are connecting.
 - An "-1" argument means it connected with next string index.
 - ">" is for string beginning.
 After its goes mark of primar index of string or -1. If it's -1, the string is connected. Connected strings always goes after the defination of connected arguments.
@@ -139,6 +160,7 @@ DO NOTE: NOT AN ALL OF CONNECTED INDEXES WAS FOUND!**
 - "<" в начале строки обозначает однострочный комментарий.
 - "#" в начале строки есть определение команды.
 - "[..., ..., ...]" есть форма описания аргументов функции (разделяются запятой) и следует сразу после определения команды.
+- "@" есть метка, на кою ссылаются некоторые команды.
 - Аргумент "-1" значит, что он связан с индексом следующей строки.
 - ">" обозначает строк начало.
 После сего идёт либо показатель изначального индекса строки, либо -1. -1 значит, что строка связанная. Связанные строки всегда следуют после задачи связанных аргументов.
