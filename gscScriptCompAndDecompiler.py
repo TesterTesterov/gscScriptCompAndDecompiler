@@ -235,8 +235,8 @@ class GscFile:
 
     ConnectedOffsetsLibrary = [[0x03, [0]],
                                [0x05, [0]]]
-    LabelsLibrary = []
-    #Индекс равен номеру метки. Метки начинаются с @. Каждый элемент есть смещение.
+    Labels = []
+    #[0] - индекс метки, [1] - смещение метки.
     
     def __init__(self, FileName, Mode):
         self.FileName = FileName
@@ -392,9 +392,44 @@ class GscFile:
 
         StringCount = 0
         Offset = 0
+        
+        #Заранее находим указанные смещения.
+        LabelNumber = 0
+        for CommandNumber in range(0, len(self.Commands)):
+            FindOffset = 0
+            Marbas = 0
+            doKnowOffset = -1
+            while (Marbas < len(self.ConnectedOffsetsLibrary)):
+                if (self.Commands[CommandNumber] == self.ConnectedOffsetsLibrary[Marbas][0]):
+                    FindOffset = 1
+                    break
+                Marbas += 1
+            if (FindOffset == 0):
+                continue
+            for Mardab in self.ConnectedOffsetsLibrary[Marbas][1]:
+                #Сперва посмотрим, относится ли к какой метке.
+                for Marmal in self.Labels:
+                    if (self.CommandArgs[CommandNumber][Mardab] == Marmal[1]):
+                        doKnowOffset = Marmal[0]
+                        break
+                #Теперь рассудим.
+                if (doKnowOffset == -1):
+                    self.Labels.append([])
+                    self.Labels[LabelNumber].append(LabelNumber)
+                    self.Labels[LabelNumber].append(self.CommandArgs[CommandNumber][Mardab])
+                    self.CommandArgs[CommandNumber][Mardab] = LabelNumber
+                    LabelNumber += 1
+                else:
+                    self.CommandArgs[CommandNumber][Mardab] = doKnowOffset
+        #Вывод метод для отладки.
+        #print(self.Labels)
+        
+        #Основная часть.
         for CommandNumber in range(0, len(self.Commands)):
             #Во-первых, следует определить при необходимости метку.
-
+            for Marmal in self.Labels:
+                if (Offset == Marmal[1]):
+                    self.File.write('@' + str(Marmal[0]) + '\n')
             #Здесь надо кое-что сперва определить...
             DontDef = 0
             DontKnow = 0
@@ -493,7 +528,7 @@ class GscFile:
                     if (Lines[i][0] == '<'): #Комментарии.
                         i += 1
                         continue
-                    if ((Lines[i][0] == '#') or (Lines[i][0] == '>')):
+                    if ((Lines[i][0] == '#') or (Lines[i][0] == '>') or (Lines[i][0] == '@')):
                         break
                     if (KostilPer == 1):
                         KostilPer = 0
@@ -546,7 +581,7 @@ class GscFile:
                             if (Lines[i][0] == '<'): #Комментарии.
                                 i += 1
                                 continue
-                            if ((Lines[i][0] == '#') or (Lines[i][0] == '>') or (Libes[i][0] == '@')):
+                            if ((Lines[i][0] == '#') or (Lines[i][0] == '>') or (Lines[i][0] == '@')):
                                 break
                             if (KostilPer == 1):
                                 KostilPer = 0
