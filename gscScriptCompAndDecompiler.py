@@ -58,6 +58,7 @@ class GscFile:
                        (0x1E, 'iiiiii', 'IMAGE_DEF'),
                        (0x51, 'iiiiiii', 'MESSAGE'),
                        (0x52, 'iiiiii', 'APPEND_MESSAGE'),
+                       (0x53, 'i', 'CLEAR_MESSAGE_WINDOW'),
                        (0x79, 'ii', 'GET_DIRECTORY'),
                        (0xC8, 'iiiiiiiiiii', 'READ_SCENARIO'), #??? Подправить число аргументов?
                        (0xFF, 'iiiii', 'SPRITE'),
@@ -112,9 +113,9 @@ class GscFile:
                        (0x3B, 'iiii', ''),
                        (0x3C, 'iii', ''),
                        (0x3D, 'ii', ''),
-                       (0x3E, 'i', ''),
-                       (0x3F, 'iii', ''),
-                       (0x40, 'i', ''),
+                       (0x3E, 'i', ''), #'i'? По D&D 'ii'.
+                       (0x3F, 'iii', ''), #'iii'? По D&D 'iiii'.
+                       (0x40, 'i', ''), #'i'? По D&D 'ii'.
                        (0x41, 'i', ''),
                        (0x42, 'iiii', ''),
                        (0x43, 'i', ''),
@@ -128,7 +129,6 @@ class GscFile:
                        (0x4B, 'iiiii', ''),
                        (0x4D, 'iiii', ''),
                        (0x50, 'i', ''),
-                       (0x53, 'i', ''),
                        (0x5A, 'iii', ''),
                        (0x5B, 'iiiii', ''),
                        (0x5C, 'ii', ''),
@@ -146,6 +146,8 @@ class GscFile:
                        (0x68, 'iiii', ''),
                        (0x69, 'ii', ''),
                        (0x6A, 'iiiii', ''),#TEMP!
+                       (0x6B, 'iii', ''), #TEMP!
+                       (0x6C, 'iii', ''), #TEMP
                        (0x6E, 'iii', ''),
                        (0x6F, 'iii', ''),
                        (0x70, 'i', ''),
@@ -226,7 +228,7 @@ class GscFile:
     #(n)(1) - структура;
     #(n)(2) - определение (может быть пустым).
 
-    ConnectedStringsLibrary = [[0x0E, [7, 8]],
+    ConnectedStringsLibrary = [[0x0E, [7, 8, 9, 10, 11]],
                                [0x0F, [1]],
                                [0x51, [-3, -2]],
                                [0x52, [-2]],
@@ -955,9 +957,9 @@ class GUI():
             mb.showwarning("Common help", """This program was developed for correctly working with .gsc files of the engine codeX Rscript, which also called as Liar-soft Engine and raiL-soft Engine. The engine is rather simple much like it's formats, for example .gsc, with which through may be some problematic moments. Still the moments are ceasing by the specific decompile and compile. But the scheme can also cause problems it some situations.\n\nThis program allow you to:\n1. Rebuild .gsc-files from themselves so you can optimize them, for in many of .gsc-files there may be some trash elements. For example some number of zeros in the end. But this command is not garantee that all trash elements will be removed. This command also allow you to see .gsc-file's parametrs and unknown commands. It may be useful for code analysis.\2. .gsc to .txt decomple. It allow you to edit scripts as you like (with limitations of syntax, of course). For example, with this tool you can easily add new message.\n3. .txt to .gsc compile. This allow you to rebuild .gsc from decompiled and may be edited ealier code. It doesn't need an ealier .gsc to present for run.\n\nFor usage:\n1. Drag the .gsc script or .txt with decompiled data to the tool directory.\n2. Write the file name in the tool entry and push the "DEFINE".\n3. Use the commands below.""")
     def CommandHelp(self):
         if (self.Language == "RUS"):
-            mb.showwarning("Помощь по командам", """Увы, команд известно мало (но не их структур), а их аргументов ещё меньше. Что, впрочем, может измениться в будущем. Всякая известная команда в файле обозначена некоторой строкой.\n\nИтак, приведём базовые известные команды с аргументами:\n\n3 (0x03): JUMP_UNLESS.\nАргументы: [метка].\n5 (0x05): JUMP.\nАргументы: [метка].\n12 (0x0C): CALL_SCRIPT.\nАргументы: [номер скрипта, ???]\n13 (0x0D): PAUSE.\nАргументы: [время в секундах].\n14 (0x0E): CHOICE.\nАргументы: [???, ???, ???, ???, ???, ???, ???, -1, -1, ???, ???, ???, ???, ???, ???].\n20 (0x14): IMAGE_GET.\nАргументы: [индекс картинки (из имени), ???].\n26 (0x1A): IMAGE_SET.\nАргументы: [].\n28 (0x1C): BLEND_IMG.\nАргументы: [???, тип1, тип2].\n30 (0x1E): IMAGE_DEF.\nАргументы: [???, ???, ???, ???, ???, ???].\n81 (0x51): MESSAGE.\nАргументы: [???, индекс гласа (из имени), ???, -1, -1, ???].\n82 (0x52): APPEND_MESSAGE.\nАргументы: [???, ???, ???, ???, -1, ???].\n121 (0x79): GET_DIRECTORY.\nАргументы: [???, -1].\n200 (0xC8): READ_SCENARIO.\nАргументы: [???, ???, ???, ???, ???, ???, ???, ???, ???, ???, ???].\n255 (0xFF): SPRITE.\nАргументы: [режим, позиция, индекс картинки, ???, ???].\n13568 (0x3500): AND.\nАргументы: [???, ???, ???].\n18432 (0x4800): EQUALS.\nАргументы: [???, ???, ???].\n21504 (0x5400): GREATER_EQUALS.\nАргументы: [???, ???, ???].\n43520 (0xAA00): ADD.\nАргументы: [???, ???, ???].\n61696 (0xF100): ASSIGN.\nАргументы: [???, ???].""")
+            mb.showwarning("Помощь по командам", """Увы, команд известно мало (но не их структур), а их аргументов ещё меньше. Что, впрочем, может измениться в будущем. Всякая известная команда в файле обозначена некоторой строкой.\n\nИтак, приведём базовые известные команды с аргументами:\n\n3 (0x03): JUMP_UNLESS.\nАргументы: [метка].\n5 (0x05): JUMP.\nАргументы: [метка].\n12 (0x0C): CALL_SCRIPT.\nАргументы: [номер скрипта, ???]\n13 (0x0D): PAUSE.\nАргументы: [время в секундах].\n14 (0x0E): CHOICE.\nАргументы: [???, ???, ???, ???, ???, ???, ???, -1, -1, ???, ???, ???, ???, ???, ???].\n20 (0x14): IMAGE_GET.\nАргументы: [индекс картинки (из имени), ???].\n26 (0x1A): IMAGE_SET.\nАргументы: [].\n28 (0x1C): BLEND_IMG.\nАргументы: [???, тип1, тип2].\n30 (0x1E): IMAGE_DEF.\nАргументы: [???, ???, ???, ???, ???, ???].\n81 (0x51): MESSAGE.\nАргументы: [???, индекс гласа (из имени), ???, -1, -1, ???].\n82 (0x52): APPEND_MESSAGE.\nАргументы: [???, ???, ???, ???, -1, ???].\n83 (0x53): CLEAR_MESSAGE_WINDOW.\nАргументы: [???].\n121 (0x79): GET_DIRECTORY.\nАргументы: [???, -1].\n200 (0xC8): READ_SCENARIO.\nАргументы: [label, ???, ???, ???, ???, ???, ???, ???, ???, ???, ???].\n255 (0xFF): SPRITE.\nАргументы: [режим, позиция, индекс картинки, ???, ???].\n13568 (0x3500): AND.\nАргументы: [???, ???, ???].\n18432 (0x4800): EQUALS.\nАргументы: [???, ???, ???].\n21504 (0x5400): GREATER_EQUALS.\nАргументы: [???, ???, ???].\n43520 (0xAA00): ADD.\nАргументы: [???, ???, ???].\n61696 (0xF100): ASSIGN.\nАргументы: [???, ???].""")
         else:
-            mb.showwarning("Command help", """Unfortunately, the number of known commands aren't big (but not of the structures). It may change it the future. All known commands are defined in decomilated file as a string.\n\nWell, let's show you a basic known commands with the arguments:\n\n3 (0x03): JUMP_UNLESS.\nArguments: [label]\n5 (0x05): JUMP.\nArguments: [label].\n12 (0x0C): CALL_SCRIPT.\nArguments: [script number, ???]0\n13 (0x0D): PAUSE.\nArguments: [time in seconds].\n14 (0x0E): CHOICE.\nArguments: [???, ???, ???, ???, ???, ???, ???, -1, -1, ???, ???, ???, ???, ???, ???].\n20 (0x14): IMAGE_GET.\nArguments: [image index (from the name), ???].\n26 (0x1A): IMAGE_SET.\nArguments: [].\n28 (0x1C): BLEND_IMG.\nArguments: [???, type1, type2].\n30 (0x1E): IMAGE_DEF.\nArguments: [???, ???, ???, ???, ???, ???].\n81 (0x51): MESSAGE.\nArguments: [???, voice index (from the name), ???, -1, -1, ???].\n82 (0x52): APPEND_MESSAGE.\nArguments: [???, ???, ???, ???, -1, ???].\n121 (0x79): GET_DIRECTORY.\nArguments: [???, -1].\n200 (0xC8): READ_SCENARIO.\nArguments: [???, ???, ???, ???, ???, ???, ???, ???, ???, ???, ???].\n255 (0xFF): SPRITE.\nArguments: [mode, position, image index, ???, ???].\n13568 (0x3500): AND.\nArguments: [???, ???, ???].\n18432 (0x4800): EQUALS.\nArguments: [???, ???, ???].\n21504 (0x5400): GREATER_EQUALS.\nArguments: [???, ???, ???].\n43520 (0xAA00): ADD.\nArguments: [???, ???, ???].\n61696 (0xF100): ASSIGN.\nArguments: [???, ???].""")
+            mb.showwarning("Command help", """Unfortunately, the number of known commands aren't big (but not of the structures). It may change it the future. All known commands are defined in decomilated file as a string.\n\nWell, let's show you a basic known commands with the arguments:\n\n3 (0x03): JUMP_UNLESS.\nArguments: [label]\n5 (0x05): JUMP.\nArguments: [label].\n12 (0x0C): CALL_SCRIPT.\nArguments: [script number, ???]0\n13 (0x0D): PAUSE.\nArguments: [time in seconds].\n14 (0x0E): CHOICE.\nArguments: [???, ???, ???, ???, ???, ???, ???, -1, -1, ???, ???, ???, ???, ???, ???].\n20 (0x14): IMAGE_GET.\nArguments: [image index (from the name), ???].\n26 (0x1A): IMAGE_SET.\nArguments: [].\n28 (0x1C): BLEND_IMG.\nArguments: [???, type1, type2].\n30 (0x1E): IMAGE_DEF.\nArguments: [???, ???, ???, ???, ???, ???].\n81 (0x51): MESSAGE.\nArguments: [???, voice index (from the name), ???, -1, -1, ???].\n82 (0x52): APPEND_MESSAGE.\nArguments: [???, ???, ???, ???, -1, ???].\n\n83 (0x53): CLEAR_MESSAGE_WINDOW.\nArguments: [???].121 (0x79): GET_DIRECTORY.\nArguments: [???, -1].\n200 (0xC8): READ_SCENARIO.\nArguments: [метка, ???, ???, ???, ???, ???, ???, ???, ???, ???, ???].\n255 (0xFF): SPRITE.\nArguments: [mode, position, image index, ???, ???].\n13568 (0x3500): AND.\nArguments: [???, ???, ???].\n18432 (0x4800): EQUALS.\nArguments: [???, ???, ???].\n21504 (0x5400): GREATER_EQUALS.\nArguments: [???, ???, ???].\n43520 (0xAA00): ADD.\nArguments: [???, ???, ???].\n61696 (0xF100): ASSIGN.\nArguments: [???, ???].""")
     def SyntaxHelp(self):
         if (self.Language == "RUS"):
             mb.showwarning("Помощь по синтаксису", """Для тех, кто скрипты именно редактировать жаждет, сие крайне важно знать. Синтаксис в целом прост, но имеет ряд особенностей.\n\n|"$" в начале строки обозначает однострочный комментарий.\n"#" в начале строки есть определение команды.\n\n"[..., ..., ...]" есть форма описания аргументов функции (разделяются запятой) и следует сразу после определения команды.\n\n"@" есть метка, на кою ссылаются некоторые команды.\n\nАргумент "-1" значит, что он связан с индексом следующей строки.\n\n">" обозначает строк начало.\nПосле сего идёт либо показатель изначального индекса строки, либо -1. -1 значит, что строка связанная. Связанные строки всегда следуют после задачи связанных аргументов.\nВАЖНО: ИНДЕКСЫ ПОСЛЕ ">" ОТОБРАЖАЮТ ЛИШЬ ИЗНАЧАЛЬНЫЕ ИНДЕКСЫ! ПРИ КОМПИЛЯЦИИ ИНДЕКС СТРОКИ БЕРЁТСЯ ЛИШЬ ИЗ НОМЕРА ">" В СКРИПТЕ!\nВАЖНО: НЕ ВСЕ СВЯЗНАННЫЕ ИНДЕКСЫ БЫЛИ НАЙДЕНЫ!""")
