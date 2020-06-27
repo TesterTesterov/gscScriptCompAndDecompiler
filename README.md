@@ -15,11 +15,18 @@ Tested on:
 - [Kusarihime \~Euthanasia\~](https://vndb.org/v37) <for the most part>
 - [Sekien no Inganock -What a Beautiful People-](https://vndb.org/v417) <for the most part>
 - [Hiragumo-chan -Sengoku Gekokujou Monogatari-](https://vndb.org/v10182) <for the some part>
+- [Dungeons & Daimeiwaku -Great Edges in the Abyss-](https://vndb.org/v19579) <for the some part>
+- [Alpha-Nighthawk](https://vndb.org/v24470) <for the some part>
+- [Albatross Log](https://vndb.org/v3883] <for the most part>
 
 Протестировано на:
 - [Принцесса порчи: Эвтаназия](https://vndb.org/v37) <по большей части>
 - [Инганок ярчайшего пламени: Как прекрасны люди](https://vndb.org/v417) <по большей части>
 - [Хирагумо-тян: Моногатари о "Высший побеждает высшего" эпохи Сэнгоку](https://vndb.org/v10182) <в некоторой степени>
+- [Огромное подземелье и огромная гора проблем: Великие грани Бездны](https://vndb.org/v19579) <в некоторой степени>
+- [Альфа-найтхоук](https://vndb.org/v24470) <в некоторой степени>
+- [Судовой журнал Альбатроса](https://vndb.org/v3883) <по большей части>
+
 
 Uncomplete game's on the engine list you can see on [here](https://vndb.org/r?fil=engine-codeX_01RScript).
 
@@ -69,7 +76,7 @@ Arguments: [script number, ???].
 - 13 (0x0D): PAUSE.
 Arguments: [time in seconds].
 - 14 (0x0E): CHOICE:
-Arguments: [???, ???, ???, ???, ???, ???, ???, -1, -1, ???, ???, ???, ???, ???, ???].
+Arguments: [???, ???, ???, ???, ???, ???, ???, -1, -1, -1, -1, -1, ???, ???, ???].
 In the original script is not -1, but choice's strings.
 - 20 (0x14): IMAGE_GET.
 Arguments: [image index (from the name), ???].
@@ -85,6 +92,8 @@ In a .gsc itself is not a -1, but a string numbers.
 - 82 (0x52): APPEND_MESSAGE.
 Arguments: [???, ???, ???, ???, -1, ???].
 In a .gsc itself is not a -1, but a string numbers.
+- 83 (0x53): CLEAR_MESSAGE_WINDOW.
+Arguments: [???].
 - 121 (0x79): GET_DIRECTORY.
 Arguments: [???, -1].
 In a .gsc itself is not a -1, but a string numbers.
@@ -116,7 +125,7 @@ Arguments: [???, ???].
 - 13 (0x0D): PAUSE.
 Аргументы: [время в секундах].
 - 14 (0x0E): CHOICE:
-Аргументы: [???, ???, ???, ???, ???, ???, ???, -1, -1, ???, ???, ???, ???, ???, ???].
+Аргументы: [???, ???, ???, ???, ???, ???, ???, -1, -1, -1, -1, -1, ???, ???, ???].
 В оригинальном скрипте вместо -1 строки-выборы, порою начинающиеся с <*>.
 - 20 (0x14): IMAGE_GET.
 Аргументы: [индекс картинки (из имени), ???].
@@ -132,6 +141,8 @@ Arguments: [???, ???].
 - 82 (0x52): APPEND_MESSAGE.
 Аргументы: [???, ???, ???, ???, -1, ???].
 В самом .gsc вместо "-1" номера строк!
+- 83 (0x53): CLEAR_MESSAGE_WINDOW.
+Arguments: [???].
 - 121 (0x79): GET_DIRECTORY.
 Аргументы: [???, -1].
 В самом .gsc вместо "-1" номера строк!
