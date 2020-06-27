@@ -17,7 +17,7 @@ Tested on:
 - [Hiragumo-chan -Sengoku Gekokujou Monogatari-](https://vndb.org/v10182) <for the some part>
 - [Dungeons & Daimeiwaku -Great Edges in the Abyss-](https://vndb.org/v19579) <for the some part>
 - [Alpha-Nighthawk](https://vndb.org/v24470) <for the some part>
-- [Albatross Log](https://vndb.org/v3883] <for the most part>
+- [Albatross Log](https://vndb.org/v3883) <for the most part>
 
 Протестировано на:
 - [Принцесса порчи: Эвтаназия](https://vndb.org/v37) <по большей части>
