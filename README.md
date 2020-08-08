@@ -18,6 +18,7 @@ Tested on:
 - [Dungeons & Daimeiwaku -Great Edges in the Abyss-](https://vndb.org/v19579) <for the some part>
 - [Alpha-Nighthawk](https://vndb.org/v24470) <for the some part>
 - [Albatross Log](https://vndb.org/v3883) <for the most part>
+- [Beta-Sixdouze Trial](https://vndb.org/r73649) <for the some part>
 
 Протестировано на:
 - [Принцесса порчи: Эвтаназия](https://vndb.org/v37) <по большей части>
@@ -26,6 +27,7 @@ Tested on:
 - [Огромное подземелье и огромная гора проблем: Великие грани Бездны](https://vndb.org/v19579) <в некоторой степени>
 - [Альфа-найтхоук](https://vndb.org/v24470) <в некоторой степени>
 - [Судовой журнал Альбатроса](https://vndb.org/v3883) <по большей части>
+- [Бета-сиксдоуз Демо](https://vndb.org/r73649) <в некоторой степени>
 
 
 Uncomplete game's on the engine list you can see on [here](https://vndb.org/r?fil=engine-codeX_01RScript).
@@ -76,8 +78,9 @@ Arguments: [script number, ???].
 - 13 (0x0D): PAUSE.
 Arguments: [time in seconds].
 - 14 (0x0E): CHOICE:
-Arguments: [???, ???, ???, ???, ???, ???, ???, -1, -1, -1, -1, -1, ???, ???, ???].
+Arguments: [variant's number, -1, *, *, *, *, *, -1, -1, -1, -1, -1, ???, ???, ???].
 In the original script is not -1, but choice's strings.
+* is for label number.
 - 20 (0x14): IMAGE_GET.
 Arguments: [image index (from the name), ???].
 - 26 (0x1A): IMAGE_SET.
@@ -96,7 +99,7 @@ In a .gsc itself is not a -1, but a string numbers.
 Arguments: [???].
 - 121 (0x79): GET_DIRECTORY.
 Arguments: [???, -1].
-In a .gsc itself is not a -1, but a string numbers.
+In a .gsc itself is not a -1, but a string numbers.https://github.com/TesterTesterov/gscScriptCompAndDecompiler/commit/83317fb91e47d45db8640204d29d242a49271798
 - 200 (0xC8): READ_SCENARIO.
 Arguments: [label, ???, ???, ???, ???, ???, ???, ???, ???, ???, ???].
 - 255 (0xFF): SPRITE.
@@ -125,8 +128,9 @@ Arguments: [???, ???].
 - 13 (0x0D): PAUSE.
 Аргументы: [время в секундах].
 - 14 (0x0E): CHOICE:
-Аргументы: [???, ???, ???, ???, ???, ???, ???, -1, -1, -1, -1, -1, ???, ???, ???].
+Аргументы: [число вариантов, -1, *, *, *, *, *, -1, -1, -1, -1, -1, ???, ???, ???].
 В оригинальном скрипте вместо -1 строки-выборы, порою начинающиеся с <*>.
+Вместо * есть метки.
 - 20 (0x14): IMAGE_GET.
 Аргументы: [индекс картинки (из имени), ???].
 - 26 (0x1A): IMAGE_SET.
