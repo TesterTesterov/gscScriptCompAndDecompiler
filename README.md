@@ -78,9 +78,8 @@ Arguments: [script number, ???].
 - 13 (0x0D): PAUSE.
 Arguments: [time in seconds].
 - 14 (0x0E): CHOICE:
-Arguments: [variant's number, -1, *, *, *, *, *, -1, -1, -1, -1, -1, ???, ???, ???].
+Arguments: [variant's number, -1, label1, label2, label3, label4, label5, -1, -1, -1, -1, -1, ???, ???, ???].
 In the original script is not -1, but choice's strings.
-* is for label number.
 - 20 (0x14): IMAGE_GET.
 Arguments: [image index (from the name), ???].
 - 26 (0x1A): IMAGE_SET.
@@ -128,9 +127,8 @@ Arguments: [???, ???].
 - 13 (0x0D): PAUSE.
 Аргументы: [время в секундах].
 - 14 (0x0E): CHOICE:
-Аргументы: [число вариантов, -1, *, *, *, *, *, -1, -1, -1, -1, -1, ???, ???, ???].
+Аргументы: [число вариантов, -1, метка1, метка2, метка3, метка4, метка5, -1, -1, -1, -1, -1, ???, ???, ???].
 В оригинальном скрипте вместо -1 строки-выборы, порою начинающиеся с <*>.
-Вместо * есть метки.
 - 20 (0x14): IMAGE_GET.
 Аргументы: [индекс картинки (из имени), ???].
 - 26 (0x1A): IMAGE_SET.
