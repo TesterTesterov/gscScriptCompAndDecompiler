@@ -98,7 +98,7 @@ In a .gsc itself is not a -1, but a string numbers.
 Arguments: [???].
 - 121 (0x79): GET_DIRECTORY.
 Arguments: [???, -1].
-In a .gsc itself is not a -1, but a string numbers.https://github.com/TesterTesterov/gscScriptCompAndDecompiler/commit/83317fb91e47d45db8640204d29d242a49271798
+In a .gsc itself is not a -1, but a string numbers.
 - 200 (0xC8): READ_SCENARIO.
 Arguments: [label, ???, ???, ???, ???, ???, ???, ???, ???, ???, ???].
 - 255 (0xFF): SPRITE.
